@@ -8,6 +8,8 @@ bufferCanvas.height = canvas.canvas.height;
 buffer.imageSmoothingEnabled = false;
 canvas.imageSmoothingEnabled = false;
 
+// TEST
+
 // Tangenthantering
 document.addEventListener("keydown", function(e) {
   keysDown[e.key.toLowerCase()] = true;
