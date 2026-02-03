@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mapmaker</title>
+  <style>
+    :root{--cell:36px;--gap:4px}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;margin:16px;color:#111}
+    h1{font-size:18px;margin:0 0 8px}
+    .app{display:flex;gap:16px}
+    .left{width:640px;flex-shrink:0}
+    .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+    .palette{display:flex;gap:6px;flex-wrap:wrap;max-width:320px}
+    .tile{width:40px;height:40px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:6px}
+    .tile.active{outline:3px solid #4f46e5}
+    .grid{display:grid;background:#e6e7eb;padding:8px;border-radius:8px}
+    .cell{display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.06);user-select:none;cursor:pointer;font-weight:600}
+    .controls{display:flex;flex-direction:column;gap:8px}
+    button{padding:8px 10px;border-radius:6px;border:1px solid #cfcfd6;background:white;cursor:pointer}
+    .levels{display:flex;gap:6px;flex-wrap:wrap}
+    .level-btn{padding:6px 8px;border-radius:6px;border:1px solid #ddd;background:#f8f8fb;cursor:pointer}
+    textarea{width:100%;height:160px;font-family:monospace;padding:8px;border-radius:6px;border:1px solid #ddd}
+    .small{font-size:13px;color:#555}
+    .row-label{font-size:12px;color:#666}
+    footer{margin-top:12px;font-size:13px;color:#444}
+
+    /* Nytt: scrollbart rutnätsområde */
+    #gridWrap {
+      max-height: 70vh; /* maxhöjd på rutnätet */
+      overflow: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>-Mapmaker-</h1>
+  <div class="app">
+    <div class="left">
+      <div class="toolbar">
+        <div style="display:flex;flex-direction:column">
+          <div class="small">Vald ruta</div>
+          <div id="selectedName" style="font-weight:700">0</div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="palette" id="palette"></div>
+        <button id="addTile" title="Lägg till nästa nummer">+ Lägg till ruta</button>
+        <button id="addLetterTile" title="Lägg till bokstav">+ Lägg till bokstav</button>
+        <button id="removeTile" title="Ta bort senaste nummer">− Ta bort sista ruta</button>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+        <div class="levels" id="levels"></div>
+        <button id="addLevel">Lägg till nivå</button>
+        <button id="duplicateLevel">Duplicera</button>
+        <button id="deleteLevel">Ta bort nivå</button>
+      </div>
+
+      <div id="gridWrap"></div>
+    </div>
+
+    <div class="controls">
+      <div>
+        <div class="small">Export / Kopiera</div>
+        <button id="copyCode">Kopiera kod till klippbord</button>
+      </div>
+
+      <div>
+        <div class="small">Export preview</div>
+        <textarea id="codeOut" readonly></textarea>
+      </div>
+
+      <div>
+        <div class="small">Importera</div>
+        <textarea id="codeIn" placeholder="Klistra här 'let world = [...]' eller bara arrayen"></textarea>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button id="importBtn">Importera</button>
+          <button id="clearAll">Rensa allt</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="small">Rader / Kolumner</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <label class="row-label">Rader <input id="rowsInput" type="number" min="1" value="8" style="width:64px;margin-left:6px"/></label>
+          <label class="row-label">Kolumner <input id="colsInput" type="number" min="1" value="16" style="width:64px;margin-left:6px"/></label>
+          <button id="resizeGrid">Ändra storlek</button>
+        </div>
+      </div>
+
+      <footer>
+        Tips: välj ett block i paletten och klicka i rutnätet. Shift-klick för att plocka upp värdet från en cell.
+      </footer>
+    </div>
+  </div>
+  <!--Spelets världsdata-->
+  <script src="../js/world.js"></script>
+  <script>
+    let rows = 8;
+    let cols = 16;
+    let tileTypes = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+    let currentLevel = 0;
+    let selectedTile = 0;
+
+    const paletteEl = document.getElementById('palette');
+    const gridWrap = document.getElementById('gridWrap');
+    const levelsEl = document.getElementById('levels');
+    const codeOut = document.getElementById('codeOut');
+    const codeIn = document.getElementById('codeIn');
+    const selectedName = document.getElementById('selectedName');
+
+    function buildPalette(){
+      paletteEl.innerHTML='';
+      tileTypes.forEach(id => {
+        const b = document.createElement('div');
+        b.className='tile'+(id===selectedTile? ' active':'');
+        b.title = id;
+        b.textContent = id;
+        b.onclick = ()=>{ selectedTile = id; updatePalette(); }
+        paletteEl.appendChild(b);
+      });
+    }
+
+    function updatePalette(){
+      Array.from(paletteEl.children).forEach((n,i)=>{
+        n.classList.toggle('active', tileTypes[i]===selectedTile);
+      });
+      selectedName.textContent = selectedTile;
+    }
+
+    function buildLevels(){
+      levelsEl.innerHTML='';
+      world.forEach((lvl,i)=>{
+        const b = document.createElement('div');
+        b.className='level-btn';
+        b.textContent = 'Nivå ' + (i+1);
+        if(i===currentLevel) b.style.background='#dfe7ff';
+        b.onclick = ()=>{ currentLevel = i; render(); }
+        levelsEl.appendChild(b);
+      });
+    }
+
+    document.getElementById('addLevel').onclick = ()=>{
+      const newGrid = Array.from({length:rows},()=>Array(cols).fill(0));
+      world.push(newGrid);
+      currentLevel = world.length-1;
+      render();
+    }
+    document.getElementById('duplicateLevel').onclick = ()=>{
+      const clone = world[currentLevel].map(r=>r.slice());
+      world.push(clone);
+      currentLevel = world.length-1;
+      render();
+    }
+    document.getElementById('deleteLevel').onclick = ()=>{
+      if(world.length<=1){ alert('Kan inte ta bort sista nivån'); return; }
+      world.splice(currentLevel,1);
+      currentLevel = Math.max(0,currentLevel-1);
+      render();
+    }
+
+    function render(){
+      rows = world[currentLevel].length;
+      cols = world[currentLevel][0].length;
+      document.getElementById('rowsInput').value = rows;
+      document.getElementById('colsInput').value = cols;
+      buildPalette();
+      buildLevels();
+
+      const grid = document.createElement('div');
+      grid.className='grid';
+
+      // --- Anpassa cellstorlek så att hela kartan syns ---
+      const wrapWidth = gridWrap.clientWidth - 16;
+      const wrapHeight = gridWrap.clientHeight - 16;
+      let cellSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cell')) || 36;
+      if (cols * cellSize > wrapWidth) cellSize = Math.floor(wrapWidth / cols);
+      if (rows * cellSize > wrapHeight) cellSize = Math.floor(wrapHeight / rows);
+
+      grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}px)`;
+      grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+      grid.style.gridGap = '4px';
+
+      grid.innerHTML='';
+      world[currentLevel].forEach((row,r)=>{
+        row.forEach((val,c)=>{
+          const cell = document.createElement('div');
+          cell.className='cell';
+          cell.style.width = cellSize + 'px';
+          cell.style.height = cellSize + 'px';
+          cell.dataset.r = r; cell.dataset.c = c;
+          cell.textContent = val===0? '' : val;
+          cell.title = `(${r}, ${c}) = ${val}`;
+
+          cell.onmousedown = (e)=>{
+            if(e.shiftKey){ selectedTile = world[currentLevel][r][c]; updatePalette(); return; }
+            world[currentLevel][r][c] = selectedTile;
+            render();
+          }
+
+          cell.oncontextmenu = (ev)=>{ ev.preventDefault(); world[currentLevel][r][c] = 0; render(); }
+
+          grid.appendChild(cell);
+        })
+      })
+
+      gridWrap.innerHTML='';
+      gridWrap.appendChild(grid);
+      updateExport();
+    }
+
+    function updateExport(){
+      const code = `// Världen\nlet world = ${JSON.stringify(world, null, 2)};`;
+      codeOut.value = code;
+    }
+
+    document.getElementById('copyCode').onclick = async ()=>{
+      try{
+        await navigator.clipboard.writeText(codeOut.value);
+        alert('Kopierat!');
+      }catch(e){
+        alert('Kunde inte kopiera automatiskt. Markera och kopiera manuellt.');
+      }
+    }
+
+    document.getElementById('importBtn').onclick = ()=>{
+      const txt = codeIn.value.trim();
+      if(!txt) return alert('Klistra in kod eller array i rutan ovan.');
+      const first = txt.indexOf('[');
+      const last = txt.lastIndexOf(']');
+      if(first===-1 || last===-1) return alert('Hittade ingen array i inmatningen.');
+      const arrText = txt.substring(first, last+1);
+      try{
+        const parsed = JSON.parse(arrText);
+        if(!Array.isArray(parsed)) throw new Error('Inte en array');
+        world = parsed;
+        currentLevel = 0;
+        const allValues = new Set();
+        parsed.forEach(lvl => lvl.forEach(row => row.forEach(v => allValues.add(v))));
+        const maxVal = Math.max(...Array.from(allValues));
+        tileTypes = Array.from({length: Math.max(2, maxVal+1)}, (_,i)=>i);
+        render();
+        alert('Importerat!');
+      }catch(err){
+        alert('Kunde inte tolka JSON: ' + err.message);
+      }
+    }
+
+    document.getElementById('clearAll').onclick = ()=>{
+      if(!confirm('Rensa alla nivåer och skapa en tom nivå?')) return;
+      world = [Array.from({length:rows},()=>Array(cols).fill(0))];
+      currentLevel = 0; render();
+    }
+
+    document.getElementById('resizeGrid').onclick = ()=>{
+      const r = parseInt(document.getElementById('rowsInput').value,10);
+      const c = parseInt(document.getElementById('colsInput').value,10);
+      if(isNaN(r)||isNaN(c)||r<1||c<1) return alert('Ogiltig storlek');
+      world = world.map(lvl => {
+        const newLvl = Array.from({length:r}, (_,ri)=>Array.from({length:c}, (_,ci)=> (lvl[ri] && typeof lvl[ri][ci]!=='undefined')? lvl[ri][ci]:0 ));
+        return newLvl;
+      });
+      rows = r; cols = c; render();
+    }
+
+    document.getElementById('addTile').onclick = ()=>{
+      const maxId = tileTypes.length ? Math.max(...tileTypes) : 0;
+      const next = maxId + 1;
+      tileTypes.push(next);
+      selectedTile = next;
+      render();
+    }
+
+    document.getElementById('addLetterTile').onclick = ()=>{
+      const letters = 'abcdefghijklmnopqrstuvwxyz';
+      for(let letter of letters){
+        if(!tileTypes.includes(letter)){
+          tileTypes.push(letter);
+          selectedTile = letter;
+          render();
+          return;
+        }
+      }
+      alert('Alla bokstäver a-z är redan tillagda');
+    }
+
+    document.getElementById('removeTile').onclick = ()=>{
+      if(tileTypes.length<=1){ alert('Minst en tiletyp måste finnas kvar'); return; }
+      const last = tileTypes[tileTypes.length-1];
+      let used = world.some(lvl => lvl.some(row => row.includes(last)));
+      if(used){
+        const ok = confirm(`Värdet ${last} används. Ersätt med 0 och ta bort värdet?`);
+        if(!ok) return;
+        world = world.map(lvl => lvl.map(row => row.map(v=>v===last?0:v)));
+      }
+      tileTypes.pop();
+      if(!tileTypes.includes(selectedTile)) selectedTile = tileTypes[0];
+      render();
+    }
+
+    window.addEventListener('keydown', (e)=>{
+      const key = e.key.toLowerCase();
+      // Stöd för siffror 0-9
+      if(e.key>='0' && e.key<='9'){
+        const n = parseInt(e.key,10);
+        if(tileTypes.includes(n)){ selectedTile = n; updatePalette(); }
+      }
+      // Stöd för bokstäver a-z
+      else if(key>='a' && key<='z'){
+        if(tileTypes.includes(key)){ selectedTile = key; updatePalette(); }
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

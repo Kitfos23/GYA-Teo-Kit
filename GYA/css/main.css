@@ -1,0 +1,52 @@
+body{
+  display: flex;
+  flex-direction: row;
+  background-color: lightblue;
+  padding: 5% 0 0 0;
+  overflow-x: none;
+  overflow-y: none;
+}
+menu{
+  margin: 0;
+  width: 20%;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid black;
+  border-left: none;
+  border-right: none;
+}
+p{
+  color: white;
+}
+main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  background-color: rgb(70, 40, 15);
+  border: 2px solid black;
+}
+right{
+  width: 20%;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid black;
+  border-left: none;
+  border-right: none;
+}
+#canvas{
+    border: 10px solid rgb(121, 69, 25);
+    background-color: white;
+    z-index: 100;
+}
+#fullScreenBtn{
+  position: absolute;
+  top: 42vh;
+  left: 42.5vw;
+  width: 15vw;
+  height: 10vh;
+  z-index: 101;
+  font-size:x-large;
+  font-weight: bold;
+  font-family:Impact, fantasy;
+  border: 3px inset darkgray;
+  border-radius: 10px;
+}
