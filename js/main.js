@@ -20,6 +20,7 @@ document.addEventListener("keydown", function(e) {
 document.addEventListener("keyup", function(e) {
   delete keysDown[e.key.toLowerCase()];
   updateDirection();
+  console.log(e.key.toLowerCase());
 });
 
 for (let y = 0; y < world[level].length; y++) {
@@ -132,6 +133,34 @@ function loadItems() {
     player.y = tile_size * 0.6;
     load();
   };
+}
+
+function resetPlayer() {
+  if (level == 0) {
+    player.x = tile_size * 14.6;
+    player.y = tile_size * 4.6;
+  } else if (level == 1) {
+    player.x = tile_size * 2.6;
+    player.y = tile_size * 4.6;
+  } else if (level == 2) {
+    player.x = tile_size * 0;
+    player.y = tile_size * 0;
+  } else if (level == 3) {
+    player.x = tile_size * 0;
+    player.y = tile_size * 0;
+  } else if (level == 4) {
+    player.x = tile_size * 0;
+    player.y = tile_size * 0;
+  } else if (level == 5) {
+    player.x = tile_size * 0;
+    player.y = tile_size * 0;
+  } else if (level == 6) {
+    player.x = tile_size * 0;
+    player.y = tile_size * 0;
+  } else if (level == 7) {
+    player.x = tile_size * 0;
+    player.y = tile_size * 0;
+  }
 }
 
 function draw() {
@@ -248,14 +277,10 @@ function draw() {
   }
 }
 
-// Startar spelet
+// Startar/Pausar spelet
+let draw_interval = null;
 function startGame() {
-  setInterval(draw, 4);
-  load();
-}
 
-// Växlar mellan full och liten skärm
-function toggleFullScreen() {
   // Spara grid-positioner innan ändring
   let playerCol = player.x / tile_size;
   let playerRow = player.y / tile_size;
@@ -272,7 +297,7 @@ function toggleFullScreen() {
   const main = document.getElementById("main");
 
   if (fullScreen) {
-    // Windowed
+    // smallscreen
     document.exitFullscreen();
     canvas.canvas.width = 640;
     canvas.canvas.height = 400;
@@ -282,11 +307,17 @@ function toggleFullScreen() {
     canvas.imageSmoothingEnabled = false;
     buffer.imageSmoothingEnabled = false;
     document.body.style.paddingTop = "5%";
-    document.getElementById("fullScreenBtn").style.top = "81vh";
-    document.getElementById("fullScreenBtn").style.left = "71.5vw";
+    document.getElementById("startGameButton").style.display = "inline";
+    document.getElementById("startGameButton").disabled = "";
+    document.getElementById("pauseGameButton").style.display = "none";
+    document.getElementById("pauseGameButton").disabled = "disabled";
+
+    clearInterval(draw_interval);
+    draw_interval = null;
   } else {
     // Fullscreen
     main.requestFullscreen();
+    navigator.keyboard.lock();
     canvas.canvas.width = 960;
     canvas.canvas.height = 600;
     bufferCanvas.width = 960;
@@ -295,8 +326,21 @@ function toggleFullScreen() {
     canvas.imageSmoothingEnabled = false;
     buffer.imageSmoothingEnabled = false;
     document.body.style.paddingTop = "0";
-    document.getElementById("fullScreenBtn").style.top = "92.6vh";
-    document.getElementById("fullScreenBtn").style.left = "94.7vw";
+    // document.getElementById("fullScreenBtn").style.top = "92.6vh";
+    // document.getElementById("fullScreenBtn").style.left = "94.7vw";
+    document.getElementById("startGameButton").style.display = "none";
+    document.getElementById("startGameButton").disabled = "disabled";
+    document.getElementById("pauseGameButton").style.display = "inline";
+    document.getElementById("pauseGameButton").disabled = "";
+    
+    // Startar spelet
+    draw_interval = setInterval(draw, 4);
+    load();
+    console.log("Game started");
+
+    actions = [];
+    startTime = Date.now();
+    document.getElementById("actions").value = "";
   }
 
   // Återställ spelaren till samma grid-position
@@ -341,7 +385,3 @@ function toggleFullScreen() {
   bufferCanvas.height = canvas.canvas.height;
   fullScreen = !fullScreen;
 }
-
-
-
-setTimeout(startGame, 0.01);

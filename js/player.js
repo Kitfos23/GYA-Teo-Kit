@@ -14,7 +14,10 @@ const player = {
 };
 
 // Spelarens startpunkt för varje bana
-if (level == 5) {
+if (level == 0) {
+  player.x = tile_size * 14.6;
+  player.y = tile_size * 4.6;
+}  else if (level == 5) {
   player.x = tile_size * 12.1;
   player.y = 4;
 } else if (level == 6) {
@@ -47,6 +50,12 @@ function updateDirection() {
   } else if (keysDown["d"] || keysDown["arrowright"]) {
     player.dx = 1; 
     player.dy = 0;
+  } else if (keysDown["escape"]) {
+    if (draw_interval) {
+      startGame();
+    }
+  } else if (keysDown["r"]) {
+    resetPlayer();
   } else {
     player.dx = 0; 
     player.dy = 0;

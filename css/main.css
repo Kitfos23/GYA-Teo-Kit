@@ -37,10 +37,25 @@ right{
     background-color: white;
     z-index: 100;
 }
-#fullScreenBtn{
+#startGameButton{
   position: absolute;
   top: 42vh;
-  left: 42.5vw;
+  left: 40vw;
+  width: 15vw;
+  height: 10vh;
+  z-index: 101;
+  font-size:x-large;
+  font-weight: bold;
+  font-family:Impact, fantasy;
+  border: 3px inset darkgray;
+  border-radius: 10px;
+}
+
+#pauseGameButton{
+  display: none;
+  position: absolute;
+  top: 90vh;
+  left: 85.5vw;
   width: 15vw;
   height: 10vh;
   z-index: 101;
