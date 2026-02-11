@@ -6,6 +6,12 @@ const wallTextures = {
   "b": "../bilder/bookshelf.png"
 };
 
+// Laddar in bakgrunds texturerna
+const bgTextures = {};
+for(let i = 1; i < 9; i++) {
+  bgTextures[i] = "../bilder/backgrounds/background"+i+".png";
+}
+
 // Laddar in vägg texturerna
 for(let i = 1; i < 19; i++) {
   wallTextures[i] = "../bilder/wall_tile-set/wall_tile-set"+i+".png";

@@ -216,6 +216,11 @@ function draw() {
        ctxTarget.fillRect(x * tile_size, y * tile_size, tile_size, tile_size);
     }
   }
+  if (level == 1) {
+    make_base(bgTextures[0], tile_size * 5, tile_size * 5, tile_size * 10, tile_size * 8);
+  }
+
+
   // Ritar grinden på spelplanen
   drawGate(ctxTarget);
 
