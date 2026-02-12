@@ -143,23 +143,23 @@ function resetPlayer() {
     player.x = tile_size * 2.6;
     player.y = tile_size * 4.6;
   } else if (level == 2) {
-    player.x = tile_size * 0;
-    player.y = tile_size * 0;
+    player.x = tile_size * 0.6;
+    player.y = tile_size * 6.6;
   } else if (level == 3) {
-    player.x = tile_size * 0;
-    player.y = tile_size * 0;
+    player.x = tile_size * 6.6;
+    player.y = tile_size * 6.6;
   } else if (level == 4) {
-    player.x = tile_size * 0;
-    player.y = tile_size * 0;
+    player.x = tile_size * 11.1;
+    player.y = tile_size * 8.1;
   } else if (level == 5) {
-    player.x = tile_size * 0;
-    player.y = tile_size * 0;
+    player.x = tile_size * 12.1;
+    player.y = tile_size * 0.1;
   } else if (level == 6) {
-    player.x = tile_size * 0;
-    player.y = tile_size * 0;
+    player.x = tile_size * 14.1;
+    player.y = tile_size * 3.1;
   } else if (level == 7) {
-    player.x = tile_size * 0;
-    player.y = tile_size * 0;
+    player.x = tile_size * 2.6;
+    player.y = tile_size * 8.6;
   }
 }
 
@@ -209,17 +209,14 @@ function draw() {
   let ctxTarget = transitionScreen ? buffer : canvas;
 
   // Ritar bakgrunden
-  for (let y = 0; y < world[level].length; y++) {
-    for (let x = 0; x < world[level][y].length; x++) {
-        ctxTarget.fillStyle = ((x + y) % 2 == 0) ? 
-        "rgba(154, 153, 153, 1)" : "rgba(142, 141, 141, 1)"; // Bakgrund
-       ctxTarget.fillRect(x * tile_size, y * tile_size, tile_size, tile_size);
-    }
-  }
-  if (level == 1) {
-    make_base(bgTextures[0], tile_size * 5, tile_size * 5, tile_size * 10, tile_size * 8);
-  }
-
+  // for (let y = 0; y < world[level].length; y++) {
+  //   for (let x = 0; x < world[level][y].length; x++) {
+  //       ctxTarget.fillStyle = ((x + y) % 2 == 0) ? 
+  //       "rgba(154, 153, 153, 1)" : "rgba(142, 141, 141, 1)"; // Bakgrund
+  //      ctxTarget.fillRect(x * tile_size, y * tile_size, tile_size, tile_size);
+  //   }
+  // }
+  make_base(bgTextures[level + 1], 0, 0, tile_size * 16, tile_size * 10);
 
   // Ritar grinden på spelplanen
   drawGate(ctxTarget);
@@ -250,36 +247,36 @@ function draw() {
 
 
   // Om transition: rita svart och cirkel som växer
-  if (transitionScreen) {
-    canvas.save();
+  // if (transitionScreen) {
+  //   canvas.save();
 
-    // Svart bakgrund
-    canvas.fillStyle = "black";
-    canvas.fillRect(0, 0, canvas.canvas.width, canvas.canvas.height);
+  //   // Svart bakgrund
+  //   canvas.fillStyle = "black";
+  //   canvas.fillRect(0, 0, canvas.canvas.width, canvas.canvas.height);
 
-    // Rita buffern i en cirkel som växer
-    canvas.beginPath();
-    canvas.arc(canvas.canvas.width / 2, canvas.canvas.height / 2, transitionDiameter / 2, 0, Math.PI * 2);
-    canvas.closePath();
-    canvas.clip();
+  //   // Rita buffern i en cirkel som växer
+  //   canvas.beginPath();
+  //   canvas.arc(canvas.canvas.width / 2, canvas.canvas.height / 2, transitionDiameter / 2, 0, Math.PI * 2);
+  //   canvas.closePath();
+  //   canvas.clip();
 
-    canvas.drawImage(bufferCanvas, 0, 0);
+  //   canvas.drawImage(bufferCanvas, 0, 0);
 
-    canvas.restore();
+  //   canvas.restore();
 
-    // Öka cirkelns storlek
-    transitionDiameter += 10;
+  //   // Öka cirkelns storlek
+  //   transitionDiameter += 10;
 
-    // När den täcker hela skärmen -> avsluta
-    if (transitionDiameter >= Math.max(canvas.canvas.width, canvas.canvas.height) * 1.5) {
-      transitionScreen = false;
+  //   // När den täcker hela skärmen -> avsluta
+  //   if (transitionDiameter >= Math.max(canvas.canvas.width, canvas.canvas.height) * 1.5) {
+  //     transitionScreen = false;
 
-      level = 1;
-      player.y = player.y - tile_size * 2;
+  //     level = 1;
+  //     player.y = player.y - tile_size * 2;
 
-      load();
-    }
-  }
+  //     load();
+  //   }
+  // }
 }
 
 // Startar/Pausar spelet

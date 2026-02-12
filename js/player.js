@@ -13,26 +13,32 @@ const player = {
   blinkDelayMax : 12
 };
 
-// Spelarens startpunkt för varje bana
+// Spelarens spawnpoint för varje bana
 if (level == 0) {
-  player.x = tile_size * 14.6;
-  player.y = tile_size * 4.6;
-}  else if (level == 5) {
-  player.x = tile_size * 12.1;
-  player.y = 4;
-} else if (level == 6) {
-  player.x = tile_size * 14;
-  player.y = tile_size * 3.1;
-} else if (level == 6) {
-  player.x = tile_size * 14;
-  player.y = tile_size * 3.1;
-}else if (level == 7) {
-  player.x = tile_size * 2.6;
-  player.y = tile_size * 8.6;
-} else {
-  player.x = tile_size * 2.6;
-  player.y = tile_size * 4.6;
-}
+    player.x = tile_size * 14.6;
+    player.y = tile_size * 4.6;
+  } else if (level == 1) {
+    player.x = tile_size * 2.6;
+    player.y = tile_size * 4.6;
+  } else if (level == 2) {
+    player.x = tile_size * 0.6;
+    player.y = tile_size * 6.6;
+  } else if (level == 3) {
+    player.x = tile_size * 6.6;
+    player.y = tile_size * 6.6;
+  } else if (level == 4) {
+    player.x = tile_size * 11.1;
+    player.y = tile_size * 8.1;
+  } else if (level == 5) {
+    player.x = tile_size * 12.1;
+    player.y = tile_size * 0.1;
+  } else if (level == 6) {
+    player.x = tile_size * 14.1;
+    player.y = tile_size * 3.1;
+  } else if (level == 7) {
+    player.x = tile_size * 2.6;
+    player.y = tile_size * 8.6;
+  }
 
 // Bytter riktning hos spelaren
 let keysDown = {};
