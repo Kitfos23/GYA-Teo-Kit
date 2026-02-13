@@ -17,6 +17,12 @@ for(let i = 1; i < 19; i++) {
   wallTextures[i] = "../bilder/wall_tile-set/wall_tile-set"+i+".png";
 }
 
+// Laddar in rolling stone texturerna
+const r_sTextures = {};
+for(let i = 1; i < 6; i++) {
+  r_sTextures[i] = "../bilder/rolling_stone/rolling_stone"+i+".png";
+}
+
 const gateTextures = [
   "../bilder/gate1.png",
   "../bilder/gate2.png"

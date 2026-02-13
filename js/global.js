@@ -6,7 +6,7 @@ let gameloop = true;
 let levelChanger = document.getElementById("levelChanger");
 
 // level 1 är standard
-let level = 1;
+let level = 2;
 
 let transitionScreen = false;
 let transitionDiameter = 0;

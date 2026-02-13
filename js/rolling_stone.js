@@ -20,11 +20,14 @@ function loadR_s(level) {
   }
 }
 
+function r_s_animation() {
+  
+}
+
 // Ritar lådan på spelplanen
-function drawR_s(canvas) {
+function drawR_s() {
   for (i = 0; i < r_s.length; i++) {
-    canvas.fillStyle = r_s[i].color;
-    canvas.fillRect(r_s[i].x, r_s[i].y, r_s[i].width, r_s[i].height);
+    make_base(r_sTextures[1], r_s[i].x, r_s[i].y, r_s[i].width, r_s[i].height);
   }
 }
 

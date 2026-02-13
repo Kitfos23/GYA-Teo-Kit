@@ -142,9 +142,9 @@ function moveBox() {
 }
 
 // Ritar lådan på spelplanen
-function drawBox(canvas) {
+function drawBox() {
   for (let i = 0; i < boxes.length; i++) {
     canvas.fillStyle = boxes[i].color;
-    make_base("../bilder/box.png", boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height, canvas);
+    make_base("../bilder/box.png", boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
   }
 }
