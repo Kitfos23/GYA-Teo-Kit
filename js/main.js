@@ -339,10 +339,6 @@ function startGame() {
     draw_interval = setInterval(draw, 4);
     load();
     console.log("Game started");
-
-    actions = [];
-    startTime = Date.now();
-    document.getElementById("actions").value = "";
   }
 
   // Återställ spelaren till samma grid-position
