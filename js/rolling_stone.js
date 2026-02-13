@@ -11,7 +11,6 @@ function loadR_s(level) {
           y: y * tile_size * 1.2,
           width: tile_size * 1.6,
           height: tile_size * 1.6,
-          color: "purple",
           speed: 1,
           is_moving: false
         });
@@ -20,17 +19,16 @@ function loadR_s(level) {
   }
 }
 
-function r_s_animation() {
-  
-}
-
 // Ritar lådan på spelplanen
 function drawR_s() {
   for (i = 0; i < r_s.length; i++) {
     make_base(r_sTextures[1], r_s[i].x, r_s[i].y, r_s[i].width, r_s[i].height);
   }
 }
+// Första bilden för r_s
+let current_img = 1
 
+// Flyttar på stenen
 function moveR_s() {
   for (let i = 0; i < r_s.length; i++) {
     if (player.x > tile_size * 6) {
@@ -45,7 +43,14 @@ function moveR_s() {
     // Flyttar stenen mot väggen
     if (r_s[i].is_moving) {
       r_s[i].x += r_s[i].speed;
-      r_s[i].color = "red";
+
+      if (r_sTextures[current_img] < 6) {
+        r_sTextures[current_img + 1];
+      } else {
+        current_img = 1;
+      }
+
+
       // Resettar spelaren vid kollision
       if (player.x < (r_s[i].x + r_s[i].width) && player.x + player.width > (r_s[i].x) && player.y < (r_s[i].y + r_s[i].height) && player.y + player.height > (r_s[i].y) && r_s[i].is_moving) {
         player.x = tile_size * 3;
@@ -54,7 +59,6 @@ function moveR_s() {
       }
       // Spelaren kan kollidera med den rullande stenen utan fara
     } else {
-      r_s[i].color = "purple";
       if (player.x < (r_s[i].x + r_s[i].width) && player.x + player.width > (r_s[i].x) && (player.y < (r_s[i].y + r_s[i].height) && player.y + player.height > (r_s[i].y)) && !r_s[i].is_moving) {
         player.x -= player.dx * player.speed;
         player.y -= player.dy * player.speed;
