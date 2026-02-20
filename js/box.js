@@ -29,25 +29,28 @@ function moveBox() {
 
     // Putta lådan om spelaren är intill och rör sig mot lådan
     let pushed = false;
-    // Vänster
-    if (player.x + player.width > boxes[i].x && player.x < boxes[i].x && player.y + player.height > boxes[i].y && player.y < boxes[i].y + boxes[i].height && player.dx > 0) {
-      boxes[i].x += player.dx * player.speed;
-      pushed = true;
-    }
-    // Höger
-    else if (player.x < boxes[i].x + boxes[i].width && player.x + player.width > boxes[i].x + boxes[i].width && player.y + player.height > boxes[i].y && player.y < boxes[i].y + boxes[i].height && player.dx < 0) {
-      boxes[i].x += player.dx * player.speed;
-      pushed = true;
-    }
-    // Ovan
-    else if (player.y + player.height > boxes[i].y && player.y < boxes[i].y && player.x + player.width > boxes[i].x && player.x < boxes[i].x + boxes[i].width && player.dy > 0) {
-      boxes[i].y += player.dy * player.speed;
-      pushed = true;
-    }
-    // Under
-    else if (player.y < boxes[i].y + boxes[i].height && player.y + player.height > boxes[i].y + boxes[i].height && player.x + player.width > boxes[i].x && player.x < boxes[i].x + boxes[i].width && player.dy < 0) {
-      boxes[i].y += player.dy * player.speed;
-      pushed = true;
+
+    if (!(level == 2 && boxes[i].y <= tile_size * 3)){
+      // Vänster
+      if (player.x + player.width > boxes[i].x && player.x < boxes[i].x && player.y + player.height > boxes[i].y && player.y < boxes[i].y + boxes[i].height && player.dx > 0) {
+        boxes[i].x += player.dx * player.speed;
+        pushed = true;
+      }
+      // Höger
+      else if (player.x < boxes[i].x + boxes[i].width && player.x + player.width > boxes[i].x + boxes[i].width && player.y + player.height > boxes[i].y && player.y < boxes[i].y + boxes[i].height && player.dx < 0) {
+        boxes[i].x += player.dx * player.speed;
+        pushed = true;
+      }
+      // Ovan
+      else if (player.y + player.height > boxes[i].y && player.y < boxes[i].y && player.x + player.width > boxes[i].x && player.x < boxes[i].x + boxes[i].width && player.dy > 0) {
+        boxes[i].y += player.dy * player.speed;
+        pushed = true;
+      }
+      // Under
+      else if (player.y < boxes[i].y + boxes[i].height && player.y + player.height > boxes[i].y + boxes[i].height && player.x + player.width > boxes[i].x && player.x < boxes[i].x + boxes[i].width && player.dy < 0) {
+        boxes[i].y += player.dy * player.speed;
+        pushed = true;
+      }
     }
 
     // Kollision med världskanten

@@ -22,11 +22,9 @@ function loadR_s(level) {
 // Ritar lådan på spelplanen
 function drawR_s() {
   for (i = 0; i < r_s.length; i++) {
-    make_base(r_sTextures[1], r_s[i].x, r_s[i].y, r_s[i].width, r_s[i].height);
+    make_base(r_sTextures[current_img], r_s[i].x, r_s[i].y, r_s[i].width, r_s[i].height);
   }
 }
-// Första bilden för r_s
-let current_img = 1
 
 // Flyttar på stenen
 function moveR_s() {
@@ -44,12 +42,21 @@ function moveR_s() {
     if (r_s[i].is_moving) {
       r_s[i].x += r_s[i].speed;
 
-      if (r_sTextures[current_img] < 6) {
-        r_sTextures[current_img + 1];
-      } else {
-        current_img = 1;
+
+      // Växlar stenens animation
+      if (animation_cooldown >= 12) {
+        if (current_img < 5) {
+          current_img ++;
+        } else {
+          current_img = 1;
+        }
+        animation_cooldown = 0;
+      } else{
+        animation_cooldown ++;
       }
 
+
+    
 
       // Resettar spelaren vid kollision
       if (player.x < (r_s[i].x + r_s[i].width) && player.x + player.width > (r_s[i].x) && player.y < (r_s[i].y + r_s[i].height) && player.y + player.height > (r_s[i].y) && r_s[i].is_moving) {

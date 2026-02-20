@@ -9,7 +9,7 @@ const wallTextures = {
 // Laddar in bakgrunds texturerna
 const bgTextures = {};
 for(let i = 1; i < 9; i++) {
-  bgTextures[i] = "../bilder/backgrounds/background"+i+".png";
+  bgTextures[i] = "../bilder/backgrounds/background_"+i+".png";
 }
 
 // Laddar in vägg texturerna

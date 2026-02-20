@@ -199,3 +199,5 @@ function closeGate() {
     }, 4)
   }
 }
+
+load();
