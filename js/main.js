@@ -313,7 +313,9 @@ function startGame() {
     document.getElementById("startGameButton").disabled = "";
     document.getElementById("pauseGameButton").style.display = "none";
     document.getElementById("pauseGameButton").disabled = "disabled";
+    document.getElementById("logo").style.display = "inline";
 
+    // Startar spelet
     clearInterval(draw_interval);
     draw_interval = null;
   } else {
@@ -334,6 +336,7 @@ function startGame() {
     document.getElementById("startGameButton").disabled = "disabled";
     document.getElementById("pauseGameButton").style.display = "inline";
     document.getElementById("pauseGameButton").disabled = "";
+    document.getElementById("logo").style.display = "none";
     
     // Startar spelet
     draw_interval = setInterval(draw, 4);

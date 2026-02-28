@@ -71,7 +71,8 @@
   </menu>
   <main id="main">
     <!-- Spelplan -->
-    <canvas id="canvas" width="640" height="400"></canvas>
+    <canvas id="canvas" width="640" height="400" style="z-index: 1;"></canvas>
+    <img src="../bilder/logo/intuition.png" id="logo">
     <button id="startGameButton" onClick="startGame()">Start Game</button>
     <button id="pauseGameButton" onClick="startGame()">Pause Game</button>
   </main>
@@ -82,7 +83,7 @@
   <form method="POST" action="">
     <input type="hidden" id="time" name="time">
     <input type="hidden" id="actions" name="actions">
-    <input type="submit" value="Skicka">
+    <input type="submit" id="send_button" value="Skicka">
   </form>
 
   <script src="../js/saveInputs.js"></script>

@@ -6,7 +6,7 @@ let gameloop = true;
 let levelChanger = document.getElementById("levelChanger");
 
 // level 1 är standard
-let level = 2;
+let level = 4;
 
 let transitionScreen = false;
 let transitionDiameter = 0;
@@ -21,5 +21,9 @@ const boxes = [];
 const r_s = [];
 const p_p = [];
 const gate = [];
+
+// Första bilden för r_s
+let current_img = 1
+let animation_cooldown = 0;
 
 
