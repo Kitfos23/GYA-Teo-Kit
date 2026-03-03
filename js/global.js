@@ -2,7 +2,6 @@
 const canvas = document.getElementById("canvas").getContext("2d");
 let tile_size = 40;
 let fullScreen = false;
-let gameloop = true;
 let levelChanger = document.getElementById("levelChanger");
 
 // level 1 är standard
@@ -25,5 +24,14 @@ const gate = [];
 // Första bilden för r_s
 let current_img = 1
 let animation_cooldown = 0;
+
+// Sätter standard skärmupplösningen
+document.getElementById("screenSwitcher").innerHTML = "pc";
+screenType = "pc";
+// document.getElementById("screenSwitcher").innerHTML = "laptop";
+// screenType = "laptop";
+
+// Gör skärmen ljusare när spelaren närmar sig skärmens kant på sista nivån
+const fadeDistance = tile_size * 6;
 
 

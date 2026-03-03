@@ -11,7 +11,8 @@ const player = {
   walkAnimationDelayMax : 21,
   blinkDelay : 0,
   blinkDelayMax : 12,
-  facing : "right"
+  facing : "right",
+  idleCounter: 0
 };
 
 // Spelarens spawnpoint för varje bana
@@ -48,9 +49,11 @@ function updateDirection() {
   if (keysDown["w"] || keysDown["arrowup"]) {
     player.dx = 0; 
     player.dy = -1;
+    player.facing = "up";
   } else if (keysDown["s"] || keysDown["arrowdown"]) {
     player.dx = 0; 
     player.dy = 1;
+    player.facing = "down";
   } else if (keysDown["a"] || keysDown["arrowleft"]) {
     player.dx = -1; 
     player.dy = 0;
@@ -100,20 +103,29 @@ function playerBlocked(world, tile_size, blockedTypes) {
 // Ritar spelaren på spelplanen
 function drawPlayer(ctxTarget) {
   // Ritar spelarens animation
-  // Spelaren går åt höger
-  if (player.dx != 0) {
+  if (player.dx !== 0 || player.dy !== 0) {
     player.walkAnimationDelay++;
+    player.idleCounter = 0; // reset när spelaren rör sig
     if (player.walkAnimationDelay >= player.walkAnimationDelayMax) {
       player.walkAnimationDelay = 0;
-      if (player.currentTexture < 8) {
-        player.currentTexture++;
+      if (player.facing === "up" || player.facing === "down") {
+        if (player.currentTexture < 4) {
+          player.currentTexture++;
+        } else {
+          player.currentTexture = 1;
+        }
       } else {
-        player.currentTexture = 3;
+        if (player.currentTexture < 8) {
+          player.currentTexture++;
+        } else {
+          player.currentTexture = 3;
+        }
       }
     }
   } else {
     // Får spelaren att blinka när hon står stilla
     player.blinkDelay++;
+    player.idleCounter++;
     if (Math.random() <= 0.05 && player.blinkDelay >= player.blinkDelayMax) {
       player.currentTexture = 1;
       player.blinkDelay = 0;
@@ -121,13 +133,22 @@ function drawPlayer(ctxTarget) {
       player.currentTexture = 2;
       player.blinkDelay = 0;
     }
+    // återställ front efter ~1 sekund
+    if (player.idleCounter >= 40) {
+      player.currentTexture = 2;
+      player.facing = "right";
+    }
   }
 
   if (player.facing == "left") {
     canvas.scale(-1,1);
     make_base(playerTextures[player.currentTexture], player.x*-1, player.y, player.width*-1, player.height, canvas);
     canvas.scale(-1,1);
-    // canvas.setTransform(1,0,0,1,0,0);
+  } else if (player.facing == "up" || player.facing == "down") {
+    let idx = player.currentTexture;
+    if (idx < 1) idx = 1;
+    if (idx > 4) idx = 4;
+    make_base(playerUpNDown[idx], player.x, player.y, player.width, player.height, canvas);
   } else {
     make_base(playerTextures[player.currentTexture], player.x, player.y, player.width, player.height, canvas);
   }

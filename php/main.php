@@ -68,6 +68,7 @@
   <menu>
     <p>GYA Teo och Kit</p>
     <br><br>
+    <button id="screenSwitcher" onclick="toggleScreenSize()">Laptop</button>
   </menu>
   <main id="main">
     <!-- Spelplan -->
@@ -94,12 +95,9 @@
 
   <script src="../js/world.js"></script>
 
-  <!-- <script src="../js/main.js"></script> -->
   <script src="../js/main.js"></script>
-  <!-- <script src="../js/branch_main_2.js"></script> -->
 
   <script src="../js/player.js"></script>
-  <!-- <script src="../js/branch_player_1.js"></script> -->
 
   <script src="../js/box.js"></script>
 

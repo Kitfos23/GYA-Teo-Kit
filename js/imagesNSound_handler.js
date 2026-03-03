@@ -30,8 +30,13 @@ const gateTextures = [
 
 // Laddar in spelarmodellen
 const playerTextures = {};
+const playerUpNDown = {};
 for(let i = 1; i < 10; i++) {
   playerTextures[i] = "../bilder/playerFront/playerFront"+i+".png";
+}
+
+for(let i = 1; i < 5; i++) {
+  playerUpNDown[i] = "../bilder/playerUpNDown/playerUpNDown"+i+".png";
 }
 
 function preloadImage(src) {

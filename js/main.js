@@ -81,7 +81,7 @@ function loadItems() {
     player.y -= tile_size * 2;
     load();
     // Level 2, går till vänster (level 3)
-  } else if (level === 2 && (player.x <= tile_size * 9 && player.x > tile_size * 8) && (player.y > tile_size * 5 && player.y < tile_size * 8)) {
+  } else if (level === 2 && (player.x <= tile_size * 8 && player.x > tile_size * 7) && (player.y > tile_size * 5 && player.y < tile_size * 8)) {
     level = 3;
     player.x -= tile_size * 2;
     load();
@@ -94,16 +94,26 @@ function loadItems() {
   } else if (level === 3 && player.y <= 0) {
     level = 4;
     player.x -= tile_size;
-    player.y = tile_size * 8.5;
+    player.y = tile_size * 8;
     load();
     // Level 4, går ner (level 3)
-  } else if (level === 4 && player.y > tile_size * 9) {
-    level = 3;
-    player.x += tile_size;
+  } else if (screenType == "pc" && level === 4 && player.y > tile_size * 8) {
+      level = 3;
+      player.x += tile_size;
+      player.y = tile_size * 0.5;
+      load();
+    } else if (screenType == "laptop" && level === 4 && player.y > tile_size * 8) {
+      level = 3;
+      player.x += tile_size;
+      player.y = tile_size * 0.5;
+      load();
+    // Level 3, går ner (level 5)
+  } else if (screenType == "pc" && level === 3 && player.y > tile_size * 8) {
+    level = 5;
     player.y = tile_size * 0.5;
     load();
     // Level 3, går ner (level 5)
-  } else if (level === 3 && player.y > tile_size * 9) {
+  }  else if (screenType == "laptop" && level === 3 && player.y > tile_size * 9) {
     level = 5;
     player.y = tile_size * 0.5;
     load();
@@ -125,16 +135,17 @@ function loadItems() {
     // Level 6 går upp (level 7)
   } else if (level === 6 && player.y <= 0) {
     level = 7;
-    player.y = tile_size * 9;
+    player.y = tile_size * 7.6;
     load();
     // Level 7 går ner (level 6)
-  } else if (level === 7 && player.y > tile_size * 9 && (player.x > tile_size && player.x <= tile_size * 4)) {
+  } else if (level === 7 && player.y > canvas.canvas.height - tile_size && (player.x > tile_size && player.x <= tile_size * 4)) {
     level = 6;
     player.y = tile_size * 0.6;
     load();
   };
 }
 
+// Spelarens startpunt / spawnpoint
 function resetPlayer() {
   if (level == 0) {
     player.x = tile_size * 14.6;
@@ -146,11 +157,16 @@ function resetPlayer() {
     player.x = tile_size * 0.6;
     player.y = tile_size * 6.6;
   } else if (level == 3) {
-    player.x = tile_size * 6.6;
-    player.y = tile_size * 6.6;
+    if (screenType == "pc") {
+      player.x = tile_size * 6.6;
+      player.y = tile_size * 6.6;
+    } else {
+        player.x = tile_size * 6.6;
+        player.y = tile_size * 6.6;
+    }
   } else if (level == 4) {
     player.x = tile_size * 11.1;
-    player.y = tile_size * 8.1;
+    player.y = tile_size * 8;
   } else if (level == 5) {
     player.x = tile_size * 12.1;
     player.y = tile_size * 0.1;
@@ -159,7 +175,7 @@ function resetPlayer() {
     player.y = tile_size * 3.1;
   } else if (level == 7) {
     player.x = tile_size * 2.6;
-    player.y = tile_size * 8.6;
+    player.y = tile_size * 7.6;
   }
 }
 
@@ -245,38 +261,38 @@ function draw() {
   // Ritar lådan på spelplanen
   drawR_s(ctxTarget);
 
+  // Hanterar skärmens fade system på slutet av spelet
+  if (level == 7) {
+    let distanceToRight = canvas.canvas.width - tile_size - player.x;
 
-  // Om transition: rita svart och cirkel som växer
-  // if (transitionScreen) {
-  //   canvas.save();
+    // Förenkla till 0 - 1
+    let fade = 1 - (distanceToRight / fadeDistance);
 
-  //   // Svart bakgrund
-  //   canvas.fillStyle = "black";
-  //   canvas.fillRect(0, 0, canvas.canvas.width, canvas.canvas.height);
+    // Begränsa fade
+    fade = Math.max(0, Math.min(1, fade));
 
-  //   // Rita buffern i en cirkel som växer
-  //   canvas.beginPath();
-  //   canvas.arc(canvas.canvas.width / 2, canvas.canvas.height / 2, transitionDiameter / 2, 0, Math.PI * 2);
-  //   canvas.closePath();
-  //   canvas.clip();
+    // Ritar vit overlay
+    if (fade > 0 ){
+      canvas.fillStyle = `rgba(255, 255, 255, ${fade})`;
+      canvas.fillRect(0, 0, canvas.canvas.width, canvas.canvas.height);
+    }
 
-  //   canvas.drawImage(bufferCanvas, 0, 0);
+    // Rör spelaren mot slutet
+    if (player.x >= tile_size * 9) {
+      player.dx = 1;
+      player.dy = 0;
+    } else if (player.x >= canvas.canvas.width - tile_size) {
+      player.dx = 0;
+      player.dy = 0;
+    }
 
-  //   canvas.restore();
+    // Spelaren klarade av spelet
+    if (player.x >= canvas.canvas.width - tile_size) {
+      canvas.fillStyle = "rgb(0,0,0)";
+      canvas.fillRect(0, 0, canvas.canvas.width, canvas.canvas.height);
 
-  //   // Öka cirkelns storlek
-  //   transitionDiameter += 10;
-
-  //   // När den täcker hela skärmen -> avsluta
-  //   if (transitionDiameter >= Math.max(canvas.canvas.width, canvas.canvas.height) * 1.5) {
-  //     transitionScreen = false;
-
-  //     level = 1;
-  //     player.y = player.y - tile_size * 2;
-
-  //     load();
-  //   }
-  // }
+    }
+  }
 }
 
 // Startar/Pausar spelet
@@ -300,6 +316,7 @@ function startGame() {
 
   if (fullScreen) {
     // smallscreen
+    // Ändrar skärmen och tile size
     document.exitFullscreen();
     canvas.canvas.width = 640;
     canvas.canvas.height = 400;
@@ -322,11 +339,22 @@ function startGame() {
     // Fullscreen
     main.requestFullscreen();
     navigator.keyboard.lock();
-    canvas.canvas.width = 960;
-    canvas.canvas.height = 600;
-    bufferCanvas.width = 960;
-    bufferCanvas.height = 600;
-    tile_size = 60;
+    // Ändrar skärmen och tile size
+    if (screenType == "pc") {
+      canvas.canvas.width = 1900;
+      canvas.canvas.height = 1060;
+      bufferCanvas.width = 1900;
+      bufferCanvas.height = 1060;
+      tile_size = 120;
+      console.log(tile_size);
+    } else {
+      canvas.canvas.width = 960;
+      canvas.canvas.height = 600;
+      bufferCanvas.width = 960;
+      bufferCanvas.height = 600;
+      tile_size = 60;
+    }
+  
     canvas.imageSmoothingEnabled = false;
     buffer.imageSmoothingEnabled = false;
     document.body.style.paddingTop = "0";
@@ -385,4 +413,16 @@ function startGame() {
   bufferCanvas.width = canvas.canvas.width;
   bufferCanvas.height = canvas.canvas.height;
   fullScreen = !fullScreen;
+}
+
+// Ändrar storlek på skärmen (laptop eller pc)
+function toggleScreenSize() {
+  // Ändrar skärmens dimensioner 
+  if (screenType == "laptop") {
+    document.getElementById("screenSwitcher").innerHTML = "pc";
+    screenType = "pc";
+  } else {
+    document.getElementById("screenSwitcher").innerHTML = "laptop";
+    screenType = "laptop";
+  }
 }

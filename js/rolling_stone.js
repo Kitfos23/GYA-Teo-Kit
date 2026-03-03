@@ -2,6 +2,9 @@ function loadR_s(level) {
   // Töm alla gamla lådor
   r_s.length = 0;
 
+  // Starta om kollen för spelarens trigger position
+  player.r_sTriggered = false;
+
   // Loopa igenom världen och skapa lådor där det finns "4"
   for (let y = 0; y < world[level].length; y++) {
     for (let x = 0; x < world[level][y].length; x++) {
@@ -28,8 +31,14 @@ function drawR_s() {
 
 // Flyttar på stenen
 function moveR_s() {
+
+  // Kollar om spelaren passerat gränsen för att aktivera stenen
+  if ((player.x < tile_size * 5 && player.x >= tile_size * 2) && (player.y < tile_size * 4 && player.y >= tile_size * 3)) {
+    player.r_sTriggered = true;
+  }
+
   for (let i = 0; i < r_s.length; i++) {
-    if (player.x > tile_size * 6) {
+    if (player.x > tile_size * 6 && player.r_sTriggered) {
       r_s[i].is_moving = true;
 
       if (r_s[i].x >= canvas.canvas.width - tile_size * 1.75) {
@@ -54,9 +63,6 @@ function moveR_s() {
       } else{
         animation_cooldown ++;
       }
-
-
-    
 
       // Resettar spelaren vid kollision
       if (player.x < (r_s[i].x + r_s[i].width) && player.x + player.width > (r_s[i].x) && player.y < (r_s[i].y + r_s[i].height) && player.y + player.height > (r_s[i].y) && r_s[i].is_moving) {
