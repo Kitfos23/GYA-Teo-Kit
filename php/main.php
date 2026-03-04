@@ -36,7 +36,6 @@
         # execute width array-parameter
         $stmt->execute($data);
             
-        echo "New record created successfully";
         $lastId = $dbconn->lastInsertId();
 
         foreach ($actions as $action) {
@@ -74,18 +73,18 @@
     <!-- Spelplan -->
     <canvas id="canvas" width="640" height="400" style="z-index: 1;"></canvas>
     <img src="../bilder/logo/intuition.png" id="logo">
-    <button id="startGameButton" onClick="startGame()">Start Game</button>
-    <button id="pauseGameButton" onClick="startGame()">Pause Game</button>
+    <button id="startGameButton" class="button_class" onClick="startGame()">Start Game</button>
+    <button id="pauseGameButton" class="button_class" onClick="startGame()">Pause Game</button>
+
+    <!-- Formulär -->
+    <form method="POST" action="">
+      <input type="hidden" id="time" name="time">
+      <input type="hidden" id="actions" name="actions">
+      <input type="submit" id="send_button" class="button_class" value="Avsluta spel">
+    </form>
   </main>
   <right>
   </right>
-
-
-  <form method="POST" action="">
-    <input type="hidden" id="time" name="time">
-    <input type="hidden" id="actions" name="actions">
-    <input type="submit" id="send_button" value="Skicka">
-  </form>
 
   <script src="../js/saveInputs.js"></script>
 

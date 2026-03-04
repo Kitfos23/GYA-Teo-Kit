@@ -1,9 +1,9 @@
 // Spelarens atribut
-const player = {
+let player = {
   width : tile_size * 0.8,
   height : tile_size * 0.8,
   color : "rgb(218, 103, 9)",
-  speed : 1.5,
+  speed : 1,
   dx : 0,
   dy : 0,
   currentTexture : 2,
@@ -13,7 +13,7 @@ const player = {
   blinkDelayMax : 12,
   facing : "right",
   idleCounter: 0
-};
+}
 
 // Spelarens spawnpoint för varje bana
 if (level == 0) {
@@ -30,7 +30,7 @@ if (level == 0) {
     player.y = tile_size * 6.6;
   } else if (level == 4) {
     player.x = tile_size * 11.1;
-    player.y = tile_size * 8.1;
+    player.y = tile_size * 8;
   } else if (level == 5) {
     player.x = tile_size * 12.1;
     player.y = tile_size * 0.1;
@@ -39,8 +39,8 @@ if (level == 0) {
     player.y = tile_size * 3.1;
   } else if (level == 7) {
     player.x = tile_size * 2.6;
-    player.y = tile_size * 8.6;
-  }
+    player.y = tile_size * 7.6;
+}
 
 // Bytter riktning hos spelaren
 let keysDown = {};
@@ -67,6 +67,7 @@ function updateDirection() {
       startGame();
     }
   } else if (keysDown["r"]) {
+    document.getElementById("send_button").style.display = "none";
     resetPlayer();
     load();
   } else {
@@ -101,7 +102,7 @@ function playerBlocked(world, tile_size, blockedTypes) {
 }
 
 // Ritar spelaren på spelplanen
-function drawPlayer(ctxTarget) {
+function drawPlayer() {
   // Ritar spelarens animation
   if (player.dx !== 0 || player.dy !== 0) {
     player.walkAnimationDelay++;
@@ -134,9 +135,13 @@ function drawPlayer(ctxTarget) {
       player.blinkDelay = 0;
     }
     // återställ front efter ~1 sekund
-    if (player.idleCounter >= 40) {
+    if (player.idleCounter >= 20) {
       player.currentTexture = 2;
-      player.facing = "right";
+      if (player.facing == "left") {
+        player.facing = "left";
+      } else {
+        player.facing = "right";
+      }
     }
   }
 
@@ -151,5 +156,12 @@ function drawPlayer(ctxTarget) {
     make_base(playerUpNDown[idx], player.x, player.y, player.width, player.height, canvas);
   } else {
     make_base(playerTextures[player.currentTexture], player.x, player.y, player.width, player.height, canvas);
+  }
+
+  // Ändrar spelarens hastighet beroende på skärmtyp
+  if (screenType == "pc") {
+    player.speed = 1.4;
+  } else {
+    player.speed = 0.8;
   }
 }

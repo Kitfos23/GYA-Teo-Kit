@@ -39,6 +39,9 @@ for(let i = 1; i < 5; i++) {
   playerUpNDown[i] = "../bilder/playerUpNDown/playerUpNDown"+i+".png";
 }
 
+// Laddar in statyn
+const statue = "../bilder/two_friends_statue.png"
+
 function preloadImage(src) {
   // Om filen inte finns i arrayen, skapa ny och lägg i arrayen
   if (!loadImages[src]) {

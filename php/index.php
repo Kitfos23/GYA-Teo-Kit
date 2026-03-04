@@ -34,7 +34,6 @@
           # execute width array-parameter
           $stmt->execute($data);
               
-          echo "New record created successfully";
           $lastId = $dbconn->lastInsertId();
 
           foreach ($actions as $action) {

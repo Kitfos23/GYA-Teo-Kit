@@ -14,7 +14,7 @@ function loadR_s(level) {
           y: y * tile_size * 1.2,
           width: tile_size * 1.6,
           height: tile_size * 1.6,
-          speed: 1,
+          speed: 0,
           is_moving: false
         });
       }
@@ -77,5 +77,14 @@ function moveR_s() {
         player.y -= player.dy * player.speed;
       };
     };
+  }
+
+  // Ändrar r_s hastighet beroende på skärmtyp
+  for (i = 0; i < r_s.length; i++) {
+    if (screenType == "pc") {
+      r_s[i].speed = 1.6;
+    } else {
+      r_s[i].speed = 1;
+    }
   }
 }
