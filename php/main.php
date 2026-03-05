@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GYA Teo och Kit</title>
+  <title>Intuition</title>
   <link href="../css/main.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -63,28 +63,44 @@
       $dbconn = null;
     }
   ?>
+  <header>
+    <div id="header_div">
+      <h2>- Intuition - </h2>
+      <h4>A Gymnasium Work Game By : Kit F & Teo R 23Te</h4>
+    </div>
+  </header>
+  <middle>
+    <menu>
+      <button id="screenSwitcher" class="button_class" onclick="toggleScreenSize()">Laptop</button>
+      <div id="menu_div">
+        <h4>Skärmtyp:</h4>
+      </div>
+    </menu>
+    <main id="main">
+      <!-- Spelplan -->
+      <canvas id="canvas" width="640" height="400" style="z-index: 1;"></canvas>
+      <img src="../bilder/logo/intuition.png" id="logo">
+      <button id="startGameButton" class="button_class" onClick="startGame()">Start Game</button>
+      <button id="pauseGameButton" class="button_class" onClick="startGame()">Pause Game</button>
 
-  <menu>
-    <p>GYA Teo och Kit</p>
-    <br><br>
-    <button id="screenSwitcher" onclick="toggleScreenSize()">Laptop</button>
-  </menu>
-  <main id="main">
-    <!-- Spelplan -->
-    <canvas id="canvas" width="640" height="400" style="z-index: 1;"></canvas>
-    <img src="../bilder/logo/intuition.png" id="logo">
-    <button id="startGameButton" class="button_class" onClick="startGame()">Start Game</button>
-    <button id="pauseGameButton" class="button_class" onClick="startGame()">Pause Game</button>
-
-    <!-- Formulär -->
-    <form method="POST" action="">
-      <input type="hidden" id="time" name="time">
-      <input type="hidden" id="actions" name="actions">
-      <input type="submit" id="send_button" class="button_class" value="Avsluta spel">
-    </form>
-  </main>
-  <right>
-  </right>
+      <!-- Formulär -->
+      <form method="POST" action="">
+        <input type="hidden" id="time" name="time">
+        <input type="hidden" id="actions" name="actions">
+        <input type="submit" id="send_button" class="button_class" value="Avsluta spel">
+      </form>
+    </main>
+    <right>
+    </right>
+  </middle>
+  <footer>
+      <ul>
+        <li>INSERT STUDIO NAME HERE© 2026. All rights reserved.</li>
+        <li>Värmdö Gymnaisum : Simlångsvägen 26, 120 39 Årsta</li>
+        <li>Kontakt : kitfos23@varmdogymnasium.se</li>
+      </ul>
+    </footer>
+  
 
   <script src="../js/saveInputs.js"></script>
 

@@ -5,7 +5,7 @@ let fullScreen = false;
 let levelChanger = document.getElementById("levelChanger");
 
 // level 1 är standard
-let level = 1;
+let level = 7;
 
 let transitionScreen = false;
 let transitionDiameter = 0;

@@ -356,7 +356,6 @@ function startGame() {
     tile_size = 40;
     canvas.imageSmoothingEnabled = false;
     buffer.imageSmoothingEnabled = false;
-    document.body.style.paddingTop = "5%";
     document.getElementById("startGameButton").style.display = "inline";
     document.getElementById("startGameButton").disabled = "";
     document.getElementById("pauseGameButton").style.display = "none";

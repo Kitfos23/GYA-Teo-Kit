@@ -82,10 +82,7 @@ function drawGate(canvas) {
   }
 }
 
-function gateCollision(dt) {
-  // beräkna avstånd som spelaren rör sig under denna ram
-  const playerDist = player.baseSpeed * tile_size * (dt / 1000);
-
+function gateCollision() {
   // Endast kollision om grinden är stängd eller håller på att öppnas
   if (!gateIsOpen) {
     for (let i = 0; i < gate.length; i++) {

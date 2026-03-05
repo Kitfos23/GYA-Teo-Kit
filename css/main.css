@@ -1,47 +1,133 @@
 html {
-  background-color: #214ca2;
+  background-color: rgb(26, 5, 162);
 }
 
 body{
   display: flex;
-  flex-direction: row;
-  padding: 5% 0 0 0;
+  flex-direction: column;
   overflow-x: none;
   overflow-y: none;
+  padding: 0;
 }
-menu{
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+  height: 25vh;
+  background-color: rgb(26, 5, 162);
+  border-top: 5px solid #031127;
+}
+
+#header_div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  height: 120px;
+  background-color: rgb(143, 1, 119);
+  border: 8px outset rgb(246, 125, 49);
+  border-radius: 20px;
+}
+
+middle {
+  display: flex;
+  flex-direction: row;
+  background-color:rgb(14, 1, 104);
+}
+
+menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0;
-  width: 20%;
-  background-color: rgb(0, 0, 0);
-  border: 2px solid black;
+  padding-left: 0;
+  width: 30%;
+  background-color: rgb(47, 19, 225);
+  border: 5px solid #031127;
+  border-left: 0;
+  border-right: 0;
   border-left: none;
   border-right: none;
+  color: black;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
 }
-p{
+
+#menu_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  width: 400px;
+  height: 250px;
+  color: rgb(246, 125, 49);
+  background-color: rgb(26, 5, 162);;
+  border: 8px outset rgb(246, 125, 49);
+  border-radius: 20px;
+}
+
+p {
   color: white;
 }
-main{
+
+main {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
-  background-color: rgb(70, 40, 15);
-  border: 2px solid black;
+  width: 40%;
+  height: 40vh;
+  background-color:rgb(14, 1, 104);
+  border: 5px solid #031127;
+  border-left: 0;
+  border-right: 0;
 }
-right{
-  width: 20%;
-  background-color: rgb(0, 0, 0);
-  border: 2px solid black;
+
+right {
+  width: 30%;
+  background-color:rgb(47, 19, 225);
+  border: 5px solid #031127;
+  border-left: 0;
+  border-right: 0;
   border-left: none;
   border-right: none;
 }
-#canvas{
-    border: 10px solid rgb(121, 69, 25);
-    background-color: rgb(0, 0, 0);
-    z-index: 100;
+
+footer {
+  display: flex;
+  position: absolute;
+  justify-items: center;
+  align-items: center;
+  margin: 0;
+  padding: 18px;
+  padding-left: 35vw;
+  padding-top: 30px;
+  width: 100%;
+  bottom: 0;
+  background-color:rgb(47, 19, 225);
+  border: 5px solid #031127;
+  border-left: 0;
+  border-right: 0;
+  color: black;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
 }
+
+#canvas {
+  border: 10px outset rgb(246, 125, 49);
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0);
+  z-index: 2;
+}
+
 .button_class {
-  background-color: #214ca2;
+  background-color: rgb(143, 1, 119);
   color: black;
   position: absolute;
   width: 15vw;
@@ -49,21 +135,23 @@ right{
   z-index: 3;
   font-size:x-large;
   font-weight: bold;
-  font-family:Impact, fantasy;
-  border: 3px inset #143464;
-  border: 3px outset #102a51;
-  border-radius: 10px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  border: 3px outset rgb(246, 125, 49);
+  border-radius: 20px;
 }
 
-#startGameButton{
-  top: 67vh;
-  left: 40vw;
+#startGameButton {
+  top: 71vh;
+  left: 42.5vw;
 }
 
-#pauseGameButton{
+#pauseGameButton {
+  background-color: rgb(143, 1, 119, 0.5);
+  border: 5px outset rgb(246, 125, 49, 0.5);
+  color: rgb(0, 0, 0, 0.8);
   display: none;
-  top: 90vh;
-  left: 85.5vw;
+  bottom: 20px;
+  right: 20px;
 }
 
 #send_button {
