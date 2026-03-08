@@ -28,8 +28,11 @@ let animation_cooldown = 0;
 // // Sätter standard skärmupplösningen
 // document.getElementById("screenSwitcher").innerHTML = "pc";
 // screenType = "pc";
-document.getElementById("screenSwitcher").innerHTML = "laptop";
+// document.getElementById("logo").style.width = "640px";
+
+document.getElementById("screenSwitcher").innerHTML = "Laptop";
 screenType = "laptop";
+document.getElementById("logo").style.width = "320px";
 
 // Gör skärmen ljusare när spelaren närmar sig skärmens kant på sista nivån
 const fadeDistance = tile_size * 6;

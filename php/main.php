@@ -66,7 +66,7 @@
   <header>
     <div id="header_div">
       <h2>- Intuition - </h2>
-      <h4>A Gymnasium Work Game By : Kit F & Teo R 23Te</h4>
+      <h4>Ett gymnasiearbete av : Kit F & Teo R 23Te</h4>
     </div>
   </header>
   <middle>
@@ -78,10 +78,9 @@
     </menu>
     <main id="main">
       <!-- Spelplan -->
-      <canvas id="canvas" width="640" height="400" style="z-index: 1;"></canvas>
+      <canvas id="canvas" width="320" height="200" style="z-index: 1;"></canvas>
       <img src="../bilder/logo/intuition.png" id="logo">
-      <button id="startGameButton" class="button_class" onClick="startGame()">Start Game</button>
-      <button id="pauseGameButton" class="button_class" onClick="startGame()">Pause Game</button>
+      <button id="pauseGameButton" class="button_class" onClick="startGame()">Pausa</button>
 
       <!-- Formulär -->
       <form method="POST" action="">
@@ -91,11 +90,15 @@
       </form>
     </main>
     <right>
+      <button id="startGameButton" class="button_class" onClick="startGame()">Start</button>
+      <div id="right_div">
+        <h4>Starta Spelet:</h4>
+      </div>
     </right>
   </middle>
   <footer>
       <ul>
-        <li>INSERT STUDIO NAME HERE© 2026. All rights reserved.</li>
+        <li>INSERT STUDIO NAME HERE© 2026. Alla rättigheter förbehållna.</li>
         <li>Värmdö Gymnaisum : Simlångsvägen 26, 120 39 Årsta</li>
         <li>Kontakt : kitfos23@varmdogymnasium.se</li>
       </ul>

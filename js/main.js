@@ -349,10 +349,19 @@ function startGame() {
     // smallscreen
     // Ändrar skärmen och tile size
     document.exitFullscreen();
-    canvas.canvas.width = 640;
-    canvas.canvas.height = 400;
-    bufferCanvas.width = 640;
-    bufferCanvas.height = 400;
+    if (screenType == "pc") {
+      canvas.canvas.width = 640;
+      canvas.canvas.height = 400;
+      bufferCanvas.width = 640;
+      bufferCanvas.height = 400;
+      document.getElementById("logo").style.width = "640px";
+    } else {
+      canvas.canvas.width = 320;
+      canvas.canvas.height = 200;
+      bufferCanvas.width = 320;
+      bufferCanvas.height = 200;
+      document.getElementById("logo").style.width = "320px";
+    }
     tile_size = 40;
     canvas.imageSmoothingEnabled = false;
     buffer.imageSmoothingEnabled = false;
@@ -450,10 +459,10 @@ function startGame() {
 function toggleScreenSize() {
   // Ändrar skärmens dimensioner 
   if (screenType == "laptop") {
-    document.getElementById("screenSwitcher").innerHTML = "pc";
+    document.getElementById("screenSwitcher").innerHTML = "PC";
     screenType = "pc";
   } else {
-    document.getElementById("screenSwitcher").innerHTML = "laptop";
+    document.getElementById("screenSwitcher").innerHTML = "Laptop";
     screenType = "laptop";
   }
 }
