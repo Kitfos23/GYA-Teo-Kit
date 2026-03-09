@@ -289,6 +289,7 @@ function draw() {
     // Rör spelaren mot slutet
     if (player.x >= tile_size * 9) {
       player.dx = 1;
+      player.facing = "right";
       if (player.y < tile_size * 3) {
         player.y = tile_size * 3;
       } else if (player.y >= tile_size * 5) {

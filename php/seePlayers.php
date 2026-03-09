@@ -8,7 +8,7 @@
 <body>
 
 <?php
-include ('../dbconnection.php');
+include ('dbconnection.php');
 $message = null;
 $id = null;
 

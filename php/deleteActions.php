@@ -7,7 +7,7 @@
 
 <body>
 <?php
-include ('../dbconnection.php');
+include ('dbconnection.php');
 try {
 
     // sql to delete table
