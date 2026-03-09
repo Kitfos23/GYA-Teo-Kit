@@ -350,16 +350,16 @@ function startGame() {
     // Ändrar skärmen och tile size
     document.exitFullscreen();
     if (screenType == "pc") {
-      canvas.canvas.width = 640;
+      canvas.canvas.width  = 640;
       canvas.canvas.height = 400;
-      bufferCanvas.width = 640;
-      bufferCanvas.height = 400;
+      bufferCanvas.width   = 640;
+      bufferCanvas.height  = 400;
       document.getElementById("logo").style.width = "640px";
     } else {
-      canvas.canvas.width = 320;
+      canvas.canvas.width  = 320;
       canvas.canvas.height = 200;
-      bufferCanvas.width = 320;
-      bufferCanvas.height = 200;
+      bufferCanvas.width   = 320;
+      bufferCanvas.height  = 200;
       document.getElementById("logo").style.width = "320px";
     }
     tile_size = 40;
@@ -455,14 +455,34 @@ function startGame() {
   fullScreen = !fullScreen;
 }
 
-// Ändrar storlek på skärmen (laptop eller pc)
-function toggleScreenSize() {
-  // Ändrar skärmens dimensioner 
-  if (screenType == "laptop") {
-    document.getElementById("screenSwitcher").innerHTML = "PC";
-    screenType = "pc";
+// Ändrar skärmens- och bildens storlek beroende på skärmtyp
+function applyScreenSize() {
+  if (screenType == "pc") {
+    canvas.canvas.width  = 640;
+    canvas.canvas.height = 400;
+    bufferCanvas.width   = 640;
+    bufferCanvas.height  = 400;
+    document.getElementById("logo").style.width = "640px";
   } else {
-    document.getElementById("screenSwitcher").innerHTML = "Laptop";
-    screenType = "laptop";
+    canvas.canvas.width  = 320;
+    canvas.canvas.height = 200;
+    bufferCanvas.width   = 320;
+    bufferCanvas.height  = 200;
+    document.getElementById("logo").style.width = "320px";
   }
 }
+
+function toggleScreenSize() {
+  // Bestämmer skärmtyp
+  if (screenType == "laptop") {
+    screenType = "pc";
+    document.getElementById("screenSwitcher").innerHTML = "PC";
+  } else {
+    screenType = "laptop";
+    document.getElementById("screenSwitcher").innerHTML = "Laptop";
+  }
+  applyScreenSize();
+}
+
+// körs första gången vid inläsning
+applyScreenSize();

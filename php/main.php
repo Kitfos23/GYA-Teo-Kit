@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intuition</title>
+  <link rel="icon" type="image/png" href="../bilder/playerFront/playerFront2.png">
   <link href="../css/main.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -50,14 +51,14 @@
             $stmt->execute($data);
           }
           catch(PDOException $e)
-              {
-              echo $sql . "<br>" . $e->getMessage();
+            {
+            echo $sql . "<br>" . $e->getMessage();
           }
         }
       }
       catch(PDOException $e)
-          {
-          echo $sql . "<br>" . $e->getMessage();
+        {
+        echo $sql . "<br>" . $e->getMessage();
       }
       
       $dbconn = null;
@@ -70,16 +71,18 @@
     </div>
   </header>
   <middle>
+    <!-- Skärmtypsbytare -->
     <menu>
       <button id="screenSwitcher" class="button_class" onclick="toggleScreenSize()">Laptop</button>
       <div id="menu_div">
         <h4>Skärmtyp:</h4>
       </div>
     </menu>
+
+    <!-- Spelplan -->
     <main id="main">
-      <!-- Spelplan -->
       <canvas id="canvas" width="320" height="200" style="z-index: 1;"></canvas>
-      <img src="../bilder/logo/intuition.png" id="logo">
+      <img src="../bilder/logo/intuition.png" id="logo" alt="Bild på spelets logga med text. Titel : Intuition Av Teo & Kit 23Te. Bakgrund : Gråskalad tegelvägg.">
       <button id="pauseGameButton" class="button_class" onClick="startGame()">Pausa</button>
 
       <!-- Formulär -->
@@ -89,6 +92,7 @@
         <input type="submit" id="send_button" class="button_class" value="Avsluta spel">
       </form>
     </main>
+    <!-- Startknapp -->
     <right>
       <button id="startGameButton" class="button_class" onClick="startGame()">Start</button>
       <div id="right_div">
@@ -96,15 +100,16 @@
       </div>
     </right>
   </middle>
+  <!-- Kontaktlista och Copyright -->
   <footer>
-      <ul>
-        <li>INSERT STUDIO NAME HERE© 2026. Alla rättigheter förbehållna.</li>
-        <li>Värmdö Gymnaisum : Simlångsvägen 26, 120 39 Årsta</li>
-        <li>Kontakt : kitfos23@varmdogymnasium.se</li>
-      </ul>
-    </footer>
+    <ul>
+      <li>INSERT STUDIO NAME HERE© 2026. Alla rättigheter förbehållna.</li>
+      <li>Värmdö Gymnaisum : Simlångsvägen 26, 120 39 Årsta</li>
+      <li>Kontakt : kitfos23@varmdogymnasium.se</li>
+    </ul>
+  </footer>
   
-
+  <!-- Javascript -->
   <script src="../js/saveInputs.js"></script>
 
   <script src="../js/global.js"></script>
@@ -126,6 +131,5 @@
   <script src="../js/pressure_plate.js"></script>
 
   <script src="../js/gate.js"></script>
-
 </body>
 </html>

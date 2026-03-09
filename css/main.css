@@ -141,17 +141,21 @@ footer {
   width: 15vw;
   height: 10vh;
   z-index: 3;
-  font-size:x-large;
+  font-size: 2vw;
   font-weight: bold;
   font-family: Georgia, 'Times New Roman', Times, serif;
   border: 3px outset rgb(246, 125, 49);
   border-radius: 20px;
 }
 
+.button_class:hover {
+  width: 16vw;
+  height: 11vh;
+  color: rgb(47, 19, 225);
+  font-size: 2.2vw;
+}
+
 #pauseGameButton {
-  background-color: rgb(143, 1, 119, 0.5);
-  border: 5px outset rgb(246, 125, 49, 0.5);
-  color: rgb(0, 0, 0, 0.8);
   display: none;
   bottom: 20px;
   right: 20px;
