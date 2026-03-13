@@ -66,7 +66,7 @@ function updateDirection() {
     if (draw_interval) {
       startGame();
     }
-  } else if (keysDown["r"]) {
+  } else if ((keysDown["r"] || keysDown["b"] || keysDown["backspace"])) {
     document.getElementById("send_button").style.display = "none";
     resetPlayer();
     load();

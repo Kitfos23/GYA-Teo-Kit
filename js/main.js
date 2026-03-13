@@ -265,7 +265,7 @@ function draw() {
   if (level == 4) {
     make_base(statue, tile_size * 9, tile_size * 2, tile_size * 2, tile_size * 2);
 
-    canvas.font = "bold 15px Arial";
+    canvas.font = "bold 15px Georgia";
     canvas.fillStyle = "black";
     canvas.fillText("En staty med två vänner", tile_size * 8.55, tile_size * 1.58);
   }
@@ -308,17 +308,17 @@ function draw() {
 
       // Ritar ut text
       if (screenType == "pc") {
-        canvas.font = "bold 140px Arial";
+        canvas.font = "bold 140px Georgia";
         canvas.strokeStyle = "black";
         canvas.fillStyle = "#102a51";
-        canvas.fillText("Tack för att du spelade!", tile_size * 1.5, tile_size * 4);
-        canvas.strokeText("Tack för att du spelade!", tile_size * 1.5, tile_size * 4);
+        canvas.fillText("Tack för att du spelade!", tile_size * 1.1, tile_size * 4);
+        canvas.strokeText("Tack för att du spelade!", tile_size * 1.1, tile_size * 4);
       } else {
-        canvas.font = "bold 70px Arial";
+        canvas.font = "bold 70px Georgia";
         canvas.strokeStyle = "black";
         canvas.fillStyle = "#102a51";
-        canvas.fillText("Tack för att du spelade!", tile_size * 1.5, tile_size * 5);
-        canvas.strokeText("Tack för att du spelade!", tile_size * 1.5, tile_size * 5);
+        canvas.fillText("Tack för att du spelade!", tile_size * 1.1, tile_size * 5);
+        canvas.strokeText("Tack för att du spelade!", tile_size * 1.1, tile_size * 5);
       }
 
       // Knapp som avslutar spelet och skickar formuläret för spelarens input
